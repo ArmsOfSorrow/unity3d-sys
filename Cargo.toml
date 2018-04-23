@@ -1,0 +1,10 @@
+[package]
+name = "unity3d-sys"
+version = "0.1.0"
+authors = ["waved"]
+build = "build.rs"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.26.3"
