@@ -6,8 +6,8 @@ authors = ["waved"]
 
 [dependencies]
 
-[build-dependencies]
-bindgen = "0.26.3"
+# [build-dependencies]
+# bindgen = "0.26.3"
 
 [lib]
 crate-type = ["cdylib"]

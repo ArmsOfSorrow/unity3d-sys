@@ -2,12 +2,17 @@
 #![allow(non_camel_case_types)]
 
 #[no_mangle]
-pub extern "stdcall" fn UnityPluginLoad(unityInterfaces: *mut IUnityInterfaces) {
+pub extern "C" fn UnityPluginLoad(unityInterfaces: *mut IUnityInterfaces) {
     println!("sup, dude");
+
+unsafe {
+    let fn_ptr = (*unityInterfaces).GetInterface.unwrap();
+}
+    
 }
 
 #[no_mangle]
-pub extern "stdcall" fn UnityPluginUnload(){
+pub extern "C" fn UnityPluginUnload(){
     println!("see ya");
 }
 
@@ -39,10 +44,13 @@ fn bindgen_test_layout_UnityInterfaceGUID() {
                 "Alignment of field: " , stringify ! ( UnityInterfaceGUID ) ,
                 "::" , stringify ! ( m_GUIDLow ) ));
 }
+
 impl Clone for UnityInterfaceGUID {
     fn clone(&self) -> Self { *self }
 }
+
 pub type IUnityInterface = ::std::os::raw::c_void;
+
 #[repr(C)]
 #[derive(Debug, Copy)]
 pub struct IUnityInterfaces {
@@ -65,6 +73,7 @@ pub struct IUnityInterfaces {
                                                                            ptr:
                                                                                *mut IUnityInterface)>,
 }
+
 #[test]
 fn bindgen_test_layout_IUnityInterfaces() {
     assert_eq!(::std::mem::size_of::<IUnityInterfaces>() , 32usize , concat !
@@ -93,6 +102,7 @@ fn bindgen_test_layout_IUnityInterfaces() {
                 "Alignment of field: " , stringify ! ( IUnityInterfaces ) ,
                 "::" , stringify ! ( RegisterInterfaceSplit ) ));
 }
+
 impl Clone for IUnityInterfaces {
     fn clone(&self) -> Self { *self }
 }
@@ -102,8 +112,10 @@ impl Clone for IUnityInterfaces {
 pub struct RenderSurfaceBase {
     _unused: [u8; 0],
 }
+
 pub type UnityRenderBuffer = *mut RenderSurfaceBase;
 pub type UnityTextureID = ::std::os::raw::c_uint;
+
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum UnityGfxRenderer {
@@ -122,6 +134,7 @@ pub enum UnityGfxRenderer {
     kUnityGfxRendererNvn = 22,
     kUnityGfxRendererXboxOneD3D12 = 23,
 }
+
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum UnityGfxDeviceEventType {
@@ -130,9 +143,11 @@ pub enum UnityGfxDeviceEventType {
     kUnityGfxDeviceEventBeforeReset = 2,
     kUnityGfxDeviceEventAfterReset = 3,
 }
+
 pub type IUnityGraphicsDeviceEventCallback =
     ::std::option::Option<unsafe extern "C" fn(eventType:
                                                    UnityGfxDeviceEventType)>;
+
 #[repr(C)]
 #[derive(Debug, Copy)]
 pub struct IUnityGraphics {
@@ -147,6 +162,7 @@ pub struct IUnityGraphics {
                                                        ->
                                                            ::std::os::raw::c_int>,
 }
+
 #[test]
 fn bindgen_test_layout_IUnityGraphics() {
     assert_eq!(::std::mem::size_of::<IUnityGraphics>() , 32usize , concat ! (
@@ -193,4 +209,3 @@ pub type UnityRenderingEventAndData =
     ::std::option::Option<unsafe extern "C" fn(eventId: ::std::os::raw::c_int,
                                                data:
                                                    *mut ::std::os::raw::c_void)>;
-
